@@ -173,8 +173,11 @@ SuperDirt {
 
 	loadSynthDefs { |path|
 		var filePaths;
+        "in loadSynthDefs".postln;
 		path = path ?? { "../synths".resolveRelative };
+        path.postln;
 		filePaths = pathMatch(standardizePath(path +/+ "*"));
+        filePaths.postln;
 		filePaths.do { |filepath|
 			if(filepath.splitext.last == "scd") {
 				(dirt:this).use { filepath.load }; "loading synthdefs in %\n".postf(filepath)
@@ -236,11 +239,9 @@ SuperDirt {
 				var event = (), orbit, index;
 				event.putPairs(msg[1..]);
 				event.postln;
-                "ay".postln;
-                "MADE IT HERE!!".postln;
 
                 if(event[\scMessage].notNil){
-                    DirtInterfaceEvent(event,this.soundLibrary).debug;
+                    DirtInterfaceEvent(event,this.soundLibrary,this).debug;
                 }
             }, '/scMessage', senderAddr, recvPort: port).fix;
         );

@@ -10,10 +10,11 @@ DirtInterfaceEvent {
 
 	var <event;
 	var soundLibrary;
+	var superdirtInstance;
 
-    *new { |event,soundLibrary|
+    *new { |event,soundLibrary,superdirtInstance|
 				// "in Interface".postln;
-        ^super.newCopyArgs(event,soundLibrary)
+        ^super.newCopyArgs(event,soundLibrary,superdirtInstance)
     }
 
 	test {
@@ -48,7 +49,13 @@ DirtInterfaceEvent {
 	loadSynthDefs{
 		// "in loadSynthDefs".postln;
 		if(event[\filePath].notNil)
-			{soundLibrary.loadSynthDefs(event[\filePath].asString)}
+			{
+            var filepath; // basically copied the loadSynthDefs command from SuperDirt.sc because the filepath wasn't parsed correctly by pathMatch(standardizePath())
+    		filepath = event[\filePath].asString;
+    		if(filepath.splitext.last == "scd") {
+    				(dirt:superdirtInstance).use { filepath.load }; "loading synthdefs in %\n".postf(filepath)
+    		 }
+		}
 			{"error: no path passed to loadSynthDefs"};
 	}
 

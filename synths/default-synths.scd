@@ -68,6 +68,7 @@ SynthDef(\in, { |out, sustain = 1, speed = 1, begin = 0, end = 1, pan, accelerat
 	var env, sound, rate, phase;
 	phase = Line.ar(begin, end, sustain);
 	rate = (begin + 1) * (speed + Sweep.kr(1, accelerate));
+	// rate = (begin + 1) * (speed + Sweep.kr(1, accelerate));
 	sound = SoundIn.ar([0, 1]); // stereo in
 	OffsetOut.ar(out,
 		DirtPan.ar(sound, ~dirt.numChannels, pan)
@@ -103,7 +104,7 @@ SynthDef(\dirt_from, { |out, sustain = 1, in, pan|
 SynthDef(\inr, { |out, sustain = 1, freq = 440, speed = 1, begin=0, end=1, pan, accelerate, offset|
 	var env, sound, rate, phase;
 	phase = Line.ar(begin, end, sustain);
-	rate = (begin + 1) * (speed + Sweep.kr(1, accelerate)) * freq / 440;
+	rate = (1) * (speed + Sweep.kr(1, accelerate)) * freq / 440;
 	sound = SoundIn.ar([0, 1]); // stereo in
 	sound = PitchShift.ar(sound, 0.1, rate, 0.02, 0.01);
 	OffsetOut.ar(out,

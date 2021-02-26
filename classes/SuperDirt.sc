@@ -180,9 +180,21 @@ SuperDirt {
         filePaths.postln;
 		filePaths.do { |filepath|
 			if(filepath.splitext.last == "scd") {
-				(dirt:this).use { filepath.load }; "loading synthdefs in %\n".postf(filepath)
+				filepath.postln;
+				(dirt:this).use { filepath.load }; 
+				"loading synthdefs in %\n".postf(filepath);
+			}
+		};
+
+// this was added just for use with TidalInterface functions with absolute paths
+// if a path is absolute, it's taken out by pathMatch(), and not loaded;
+		if(filePaths == []) {
+			if(path.splitext.last == "scd") {
+				path.postln;
+				(dirt:this).use {path.load }; "loading synthdefs in %\n".postf(path)
 			}
 		}
+
 	}
 
 	initVowels { |register|
@@ -234,8 +246,8 @@ SuperDirt {
 			}, '/play2', senderAddr, recvPort: port).fix
 		);
 
-    netResponders.add(
-        OSCFunc({ |msg, time, tidalAddr|
+	    netResponders.add(
+	        OSCFunc({ |msg, time, tidalAddr|
 				var event = (), orbit, index;
 				event.putPairs(msg[1..]);
 				event.postln;

@@ -48,6 +48,7 @@ DirtInterfaceEvent {
 
 	loadSynthDefs{
 		// "in loadSynthDefs".postln;
+		// this is stupid but
 		if(event[\filePath].notNil)
 			{
             var filepath; // basically copied the loadSynthDefs command from SuperDirt.sc because the filepath wasn't parsed correctly by pathMatch(standardizePath())
@@ -111,7 +112,7 @@ DirtInterfaceEvent {
 	}
 
 	debug { 
-		event.postln;
+		// event.postln;
 		this.parse;
 	}
 
